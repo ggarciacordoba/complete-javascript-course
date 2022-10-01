@@ -12,20 +12,30 @@ const currentScore1El = document.getElementById('current--1');
 const player0El = document.querySelector('.player--0');
 const player1El = document.querySelector('.player--1');
 
-let scorePlayerOne = 0;
-let scorePlayerTwo = 0;
 
-const scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let playing = true; //Variable to disable some button when we finish the game
+let scores, currentScore, activePlayer, playing;
 
-//Initialize scores
-score0El.textContent = scorePlayerOne;
-score1El.textContent = scorePlayerTwo;
+const init = function () {
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  playing = true; //Variable to disable some button when we finish the game
+  
+  //Initialize scores
+  score0El.textContent = scores[0];
+  score1El.textContent = scores[1];
+  currentScore0El.textContent=0;
+  currentScore1El.textContent=0;
+  
+  //Hide the dice
+  diceEl.classList.add('hidden');
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+  player0El.classList.add('player--active');
+  player1El.classList.remove('player--active');
+};
+init();
 
-//Hide the dice
-diceEl.classList.add('hidden');
 
 const switchPlayer = function () {
   currentScore = 0;
@@ -37,6 +47,45 @@ const switchPlayer = function () {
   player0El.classList.toggle('player--active');
   player1El.classList.toggle('player--active');
 };
+
+//New Game Handler
+/* My proposal
+btnNew.addEventListener('click', function (){
+  //
+  
+  //Reset Scores
+  playing = true;
+  scores[0] = 0;
+  scores[1] = 0;
+  score0El.textContent =
+      scores[0];
+  score1El.textContent =
+      scores[1];
+
+  //Move winner style
+  document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.remove('player--winner');
+  document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add('player--active');
+
+  //Reset current and style
+  if(activePlayer){
+    console.log()
+    switchPlayer();
+  } else {
+    currentScore = 0;
+  document.getElementById(`current--${activePlayer}`).textContent =
+    currentScore;
+  }
+
+  
+
+});*/
+
+//Course proposal
+btnNew.addEventListener('click',init);
 
 //Rolling dice functionality
 btnRoll.addEventListener('click', function () {
@@ -65,7 +114,7 @@ btnHold.addEventListener('click', function () {
     document.getElementById(`score--${activePlayer}`).textContent =
       scores[activePlayer];
 
-    if (scores[activePlayer] >= 20) {
+    if (scores[activePlayer] >= 100) {
       playing = false;
       diceEl.classList.add('hidden');
 
@@ -75,7 +124,7 @@ btnHold.addEventListener('click', function () {
       document
         .querySelector(`.player--${activePlayer}`)
         .classList.remove('player--active');
-    } else {
+      } else {
       switchPlayer();
     }
   }
