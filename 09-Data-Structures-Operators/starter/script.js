@@ -450,3 +450,153 @@ console.log(entries);
 for (const [key, { open, close }] of entries) {
   console.log(`On ${key} we open at ${open} and close at ${close} `);
 }
+
+/*
+ * Class 116 - Sets
+ */
+
+//Sets is a collection of unique values. It can't have duplicates
+//ORders in a set are irrelevant but they are iterables
+
+const ordersSet = new Set([
+  'Pizza',
+  'Pasta',
+  'Pizza',
+  'Pasta',
+  'Risotto',
+  'Pizza',
+]);
+
+console.log(ordersSet); //Set (3) {"Pasta","Pizza", "Risotto"}
+
+console.log(new Set('Jonas')); //Set (5) {"J","o","n","a","s"}
+
+//Get size of the set
+console.log(ordersSet.size); //3
+
+//Check if an element is on the set
+console.log(ordersSet.has('Pizza')); //true
+console.log(ordersSet.has('Bread')); //false
+
+//Add elements to the set
+ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread');
+
+//Delete elements from the set
+ordersSet.delete('Risotto');
+
+//You can't find a single element of the set like array[0]. The idea
+// is to see if the element is on the set.
+
+//Clear the set
+ordersSet.clear();
+
+//We can iterate sets
+for (const order of ordersSet) console.log(order);
+
+//Normally we use sets to remove duplicate from an array
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+
+//We want to know the unique roles
+const staffUnique = new Set(staff);
+console.log(staffUnique);
+
+//Now we want to convert the set to an array.
+const newArray = [...staffUnique];
+console.log(newArray);
+
+/*
+ * Class 117 - Maps: Fundamentals
+ */
+
+//A data structure to map values to keys. On objects the key are always strings
+// In maps they can be whatever we want.
+
+//The best way is first to create an empty map
+const rest = new Map();
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Italy');
+//When you do a set you get always the set updated as a return
+console.log(rest.set(2, 'Lisbon, Portugal'));
+
+//We can chain the set methods
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open :D')
+  .set(false, 'We are closed :(');
+
+console.log(rest);
+
+//Find an element by key
+console.log(rest.get('name'));
+console.log(rest.get(true));
+
+const time = 6;
+console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+
+//Check if a map has a certain key
+console.log(rest.has('categories'));
+
+//Remove an element from the map
+rest.delete(2);
+console.log(rest);
+
+//Check the SIZE of a map
+console.log(rest.size);
+
+//Clear MAP
+rest.clear();
+
+//We can put arrays as keys too
+rest.set([1, 2], 'Test'); //If we do it this way we can't get it later. As it will have a different key
+rest.get([1, 2]); //Undefined
+
+//Corrent way
+const arr3 = [1, 2];
+rest.set(arr3, 'Test');
+console.log(rest.get(arr3));
+
+//We can also add DOM elements
+rest.set(document.querySelector('h1'), 'Heading');
+console.log(rest);
+
+/*
+ * Class 117 - Maps: Iteration
+ */
+
+const question = new Map([
+  ['question', 'What is the best programming language in the world?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct! 🎉'],
+  [false, 'Try again'],
+]);
+
+console.log(question); //Similar to Object.entries()
+
+//How to convert from an Object to Map
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
+
+//Iterate a Map
+//Quiz app
+console.log(question.get('question'));
+
+for (const [key, value] of question) {
+  //We also apply destructuring
+  if (typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+}
+
+const answer = Number(prompt('Your answer'));
+console.log(answer);
+
+console.log(question.get(answer === question.get('correct')));
+
+//Convert Map to Array
+console.log(...question);
+const mapToArray = [...question];
+console.log(mapToArray);
